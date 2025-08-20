@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern CV — Your Name</title>
+  <meta name="description" content="A modern, vibrant personal website to showcase profile, current work, projects, and more." />
+  <meta name="theme-color" content="#0ea5e9" />
+  <!-- Favicon (SVG data URI) -->
+  <link rel="icon" href='data:image/svg+xml;utf8,
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop stop-color="%23a78bfa" offset="0" />
+        <stop stop-color="%23fb7185" offset="1" />
+      </linearGradient>
+    </defs>
+    <circle cx="50" cy="50" r="48" fill="url(%23g)"/>
+    <text x="50" y="58" font-family="Arial, Helvetica, sans-serif" font-size="48" text-anchor="middle" fill="white">Y</text>
+  </svg>' />
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #0f152c;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --card: #0f172a;
+      --border: rgba(255,255,255,.1);
+      --ring: rgba(255,255,255,.2);
+      --accent-1: #22d3ee; /* cyan */
+      --accent-2: #a78bfa; /* violet */
+      --accent-3: #fb7185; /* rose */
+      --accent-4: #34d399; /* emerald */
+      --gradient: conic-gradient(from 180deg at 50% 50%, var(--accent-2), var(--accent-1), var(--accent-4), var(--accent-3), var(--accent-2));
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px var(--border);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f8fafc;
+        --bg-soft: #eef2ff;
+        --text: #0b1020;
+        --muted: #334155;
+        --card: #ffffff;
+        --border: rgba(16,24,40,.1);
+        --ring: rgba(16,24,40,.12);
+        --shadow: 0 10px 30px rgba(2, 6, 23, .08), inset 0 0 0 1px var(--border);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(167,139,250,.25), transparent 60%),
+                  radial-gradient(1000px 700px at -10% 20%, rgba(34,211,238,.20), transparent 60%),
+                  radial-gradient(800px 600px at 50% 120%, rgba(251,113,133,.20), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ====== Layout ====== */
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
+    section { padding: 96px 0; position: relative; }
+    .section-title { font-size: clamp(28px, 4vw, 40px); margin: 0 0 24px; letter-spacing: -0.02em; }
+    .section-subtitle { color: var(--muted); margin: 0 0 32px; }
+
+    /* ====== Header / Nav ====== */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(150%) blur(8px);
+      background: linear-gradient(to bottom, rgba(11,16,32,.8), rgba(11,16,32,.2));
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .3px; }
+    .logo-dot { width: 14px; height: 14px; border-radius: 999px; background: linear-gradient(135deg, var(--accent-2), var(--accent-3)); box-shadow: 0 0 0 6px rgba(167,139,250,.15); }
+    .nav a { color: var(--text); text-decoration: none; opacity: .9; }
+    .nav-links { display: flex; gap: 20px; align-items: center; }
+    .nav-links a { padding: 8px 12px; border-radius: 999px; position: relative; }
+    .nav-links a:hover::after, .nav-links a.active::after {
+      content: ""; position: absolute; inset: auto 6px -2px 6px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+    }
+    .theme-toggle { border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); padding: 8px 12px; border-radius: 12px; cursor: pointer; box-shadow: var(--shadow); font-family: var(--mono); }
+
+    /* ====== Hero ====== */
+    .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 32px; align-items: center; min-height: 72vh; }
+    .hero h1 { font-size: clamp(36px, 7vw, 68px); margin: 0 0 12px; line-height: 1.05; letter-spacing: -0.03em; }
+    .gradient-text { background: linear-gradient(90deg, var(--accent-3), var(--accent-2), var(--accent-1)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p { color: var(--muted); font-size: clamp(16px, 2.4vw, 18px); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 28px; }
+    .chip { padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04)); box-shadow: var(--shadow); font-size: 13px; }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); padding: 12px 16px; border-radius: 14px; box-shadow: var(--shadow); text-decoration: none; color: var(--text); display: inline-flex; align-items: center; gap: 10px; }
+    .btn.primary { background: linear-gradient(135deg, var(--accent-2), var(--accent-1)); border: none; }
+
+    .hero-card { position: relative; padding: 22px; border-radius: 22px; background: radial-gradient(120% 180% at 120% -20%, rgba(34,211,238,.2), transparent 60%), radial-gradient(100% 140% at -10% 120%, rgba(251,113,133,.18), transparent 60%), linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); box-shadow: var(--shadow); border: 1px solid var(--border); }
+    .pfp { width: 100%; aspect-ratio: 1 / 1; border-radius: 18px; background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.03)); border: 1px solid var(--border); display: grid; place-items: center; font-size: 56px; }
+    .status { position: absolute; right: 16px; top: 16px; padding: 8px 10px; font-size: 12px; border-radius: 999px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); box-shadow: var(--shadow); }
+
+    /* ====== Cards grid ====== */
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+    .card { grid-column: span 6; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 50px rgba(0,0,0,.4), inset 0 0 0 1px var(--border); }
+    .card h3 { margin-top: 0; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .card p { margin: 0; color: var(--muted); }
+    .card .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+    .tag { font-size: 12px; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); }
+
+    /* Featured project */
+    .featured { grid-column: span 12; display: grid; grid-template-columns: 1.1fr .9fr; gap: 18px; align-items: stretch; }
+    .mock { border-radius: 16px; border: 1px solid var(--border); background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02)); min-height: 220px; display: grid; place-items: center; font-family: var(--mono); font-size: 14px; }
+
+    /* Timeline */
+    .timeline { position: relative; margin-top: 10px; padding-left: 16px; }
+    .timeline::before { content: ""; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: linear-gradient(var(--accent-2), var(--accent-1)); border-radius: 2px; opacity: .5; }
+    .milestone { position: relative; margin: 18px 0 18px 16px; padding: 14px 16px; border-radius: 14px; background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .milestone::after { content: ""; position: absolute; left: -18px; top: 18px; width: 10px; height: 10px; border-radius: 999px; background: var(--gradient); box-shadow: 0 0 0 3px rgba(167,139,250,.15); }
+
+    /* Skills */
+    .skills { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .pill { padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); text-align: center; font-size: 14px; }
+
+    /* Footer */
+    footer { padding: 40px 0 80px; color: var(--muted); border-top: 1px solid var(--border); background: linear-gradient(to top, rgba(255,255,255,.02), transparent); }
+    .foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .hero { grid-template-columns: 1fr; }
+      .featured { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .card { grid-column: auto; }
+      .skills { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Subtle animated blobs */
+    .blob {
+      position: absolute; filter: blur(40px); opacity: .6; pointer-events: none; mix-blend-mode: screen;
+      background: radial-gradient(closest-side, rgba(167,139,250,.7), transparent);
+      width: 260px; height: 260px; border-radius: 999px; animation: float 18s ease-in-out infinite;
+    }
+    .blob.b2 { left: 70%; top: -40px; background: radial-gradient(closest-side, rgba(34,211,238,.7), transparent); animation-duration: 22s; }
+    .blob.b3 { left: 4%; top: 40%; background: radial-gradient(closest-side, rgba(251,113,133,.7), transparent); animation-duration: 26s; }
+    @keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(28px) } }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* Accessible focus */
+    :focus-visible { outline: 2px solid var(--accent-1); outline-offset: 3px; }
+
+    /* Print-friendly */
+    @media print {
+      header, .theme-toggle, .blob, .cta-row a[href^="#"] { display: none !important; }
+      body { background: #fff; color: #000; }
+      .card, .milestone { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="logo-dot" aria-hidden></span> <span>yourname.dev</span></div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about" class="active">About</a>
+        <a href="#current">Current</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌗 Theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div>
+        <h1>
+          Hi, I'm <span class="gradient-text">Your Name</span> ✌️
+        </h1>
+        <p>
+          Front‑end developer crafting delightful, accessible web apps with modern stacks and a love for colorful gradients.
+          This is a living CV: it updates as I ship things.
+        </p>
+        <div class="chip-row">
+          <span class="chip">Open to roles</span>
+          <span class="chip">Remote / Hybrid</span>
+          <span class="chip">Building in public</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn primary" href="#projects">🚀 View Projects</a>
+          <a class="btn" href="#contact">📬 Get in Touch</a>
+          <a class="btn" href="resume.pdf" download>⬇️ Download Résumé</a>
+        </div>
+      </div>
+      <div class="hero-card reveal" aria-label="Profile card">
+        <div class="status">Currently: <strong>Shipping</strong> 🔥</div>
+        <div class="pfp" aria-hidden>👤</div>
+        <div style="margin-top: 14px; color: var(--muted);">
+          Based in <strong>City, Country</strong> • <span id="yearsExp">0</span>+ yrs exp • <a href="#contact" style="color: var(--text);">Hire me</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="blob b1" style="left:-80px; top:-60px"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About</h2>
+        <p class="section-subtitle">A quick snapshot of who I am and what I value.</p>
+        <div class="grid">
+          <article class="card reveal">
+            <h3>Profile</h3>
+            <p>
+              I’m a developer focused on performance, accessibility and craft. I love turning complex problems into simple, beautiful interfaces.
+            </p>
+            <div class="tags">
+              <span class="tag">Design Systems</span>
+              <span class="tag">Accessibility (a11y)</span>
+              <span class="tag">Web Perf</span>
+            </div>
+          </article>
+          <article class="card reveal">
+            <h3>What I'm looking for</h3>
+            <p>
+              Product‑oriented teams, thoughtful code reviews, and opportunities to mentor. I thrive in places where UX and DX both matter.
+            </p>
+            <div class="tags">
+              <span class="tag">Frontend Lead</span>
+              <span class="tag">UI Engineer</span>
+              <span class="tag">Freelance</span>
+            </div>
+          </article>
+          <article class="card featured reveal">
+            <div>
+              <h3>Featured: Design‑driven Portfolio Template</h3>
+              <p class="section-subtitle" style="margin: 8px 0 14px;">
+                This very page is a template you can clone and customize in minutes.
+              </p>
+              <div class="tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">Vanilla JS</span>
+              </div>
+            </div>
+            <div class="mock" aria-hidden>
+              <div>
+                <div>// Responsive grid
+                </div>
+                <div>// Gradient layers
+                </div>
+                <div>// Glassmorphism cards
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="current">
+      <div class="container">
+        <h2 class="section-title">Current Work</h2>
+        <p class="section-subtitle">A living log of what I'm actively building or learning.</p>
+        <div class="timeline">
+          <div class="milestone reveal">
+            <strong>Aug 2025</strong> — Shipping a gradient‑themed UI kit with tokens and theming.
+            <div class="tags" style="margin-top:8px">
+              <span class="tag">Design Tokens</span>
+              <span class="tag">Theming</span>
+            </div>
+          </div>
+          <div class="milestone reveal">
+            <strong>Jul 2025</strong> — Refactoring a large React codebase for accessibility and perf.
+            <div class="tags" style="margin-top:8px">
+              <span class="tag">React</span>
+              <span class="tag">A11y</span>
+              <span class="tag">Web Vitals</span>
+            </div>
+          </div>
+          <div class="milestone reveal">
+            <strong>Jun 2025</strong> — Launched an OSS color‑contrast checker.
+            <div class="tags" style="margin-top:8px">
+              <span class="tag">OSS</span>
+              <span class="tag">Tooling</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-subtitle">Filter by focus:</p>
+        <div class="chip-row" id="filters" role="group" aria-label="Project filters">
+          <button class="chip" data-filter="all" aria-pressed="true">All</button>
+          <button class="chip" data-filter="web">Web</button>
+          <button class="chip" data-filter="design">Design</button>
+          <button class="chip" data-filter="tooling">Tooling</button>
+        </div>
+
+        <div class="grid" id="projectGrid">
+          <article class="card reveal" data-tags="web design">
+            <h3>Gradient Playground</h3>
+            <p>Interactive gradient editor with CSS export and presets.</p>
+            <div class="tags"><span class="tag">Web</span><span class="tag">Design</span></div>
+          </article>
+          <article class="card reveal" data-tags="tooling web">
+            <h3>Contrast Checker</h3>
+            <p>Fast, accessible color contrast checker with WCAG guidance.</p>
+            <div class="tags"><span class="tag">Tooling</span><span class="tag">Web</span></div>
+          </article>
+          <article class="card reveal" data-tags="design">
+            <h3>Icon Set</h3>
+            <p>Pixel‑perfect, minimalist icon pack for dashboards.</p>
+            <div class="tags"><span class="tag">Design</span></div>
+          </article>
+          <article class="card reveal" data-tags="web">
+            <h3>Micro‑interactions</h3>
+            <p>Collection of tasteful UI motion snippets with code.</p>
+            <div class="tags"><span class="tag">Web</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <h2 class="section-title">Skills</h2>
+        <p class="section-subtitle">My current stack & specialties.</p>
+        <div class="skills">
+          <div class="pill">HTML5</div>
+          <div class="pill">CSS / Tailwind</div>
+          <div class="pill">JavaScript (ES2023)</div>
+          <div class="pill">React</div>
+          <div class="pill">TypeScript</div>
+          <div class="pill">Node.js</div>
+          <div class="pill">Vite</div>
+          <div class="pill">Design Systems</div>
+          <div class="pill">Accessibility</div>
+          <div class="pill">Testing</div>
+          <div class="pill">Performance</div>
+          <div class="pill">Animations</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-subtitle">Want to collaborate or chat? Reach out.</p>
+        <div class="grid">
+          <article class="card reveal" style="grid-column: span 8;">
+            <h3>Message Me</h3>
+            <form id="contactForm" class="reveal" style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px;">
+              <label style="display:flex; flex-direction:column; gap:6px;">
+                Name
+                <input required name="name" placeholder="Jane Doe" aria-label="Your name" style="padding:12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text)">
+              </label>
+              <label style="display:flex; flex-direction:column; gap:6px;">
+                Email
+                <input required type="email" name="email" placeholder="jane@doe.com" aria-label="Your email" style="padding:12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text)">
+              </label>
+              <label style="display:flex; flex-direction:column; gap:6px; grid-column: span 2;">
+                Message
+                <textarea required name="message" rows="4" placeholder="Tell me about your project…" aria-label="Your message" style="padding:12px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text)"></textarea>
+              </label>
+              <div style="grid-column: span 2; display:flex; gap: 12px;">
+                <button class="btn primary" type="submit">Send</button>
+                <button class="btn" type="reset">Reset</button>
+              </div>
+              <p id="formNote" class="section-subtitle" style="grid-column: span 2; margin: 4px 0 0;"></p>
+            </form>
+          </article>
+          <article class="card reveal" style="grid-column: span 4;">
+            <h3>Elsewhere</h3>
+            <p>Connect with me across the web.</p>
+            <div class="tags" style="margin-top: 14px;">
+              <a class="tag" href="#" target="_blank" rel="noopener">GitHub</a>
+              <a class="tag" href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="tag" href="#" target="_blank" rel="noopener">Twitter</a>
+              <button class="tag" id="copyEmail" type="button">Copy Email 📋</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>© <span id="year"></span> Your Name — Crafted with gradients ✨</div>
+      <div>Built with semantic HTML, modern CSS & vanilla JS.</div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Active nav link on scroll =====
+    const sections = Array.from(document.querySelectorAll('main section'));
+    const navLinks = Array.from(document.querySelectorAll('header .nav-links a'));
+    const setActive = () => {
+      const pos = window.scrollY + 100;
+      let current = sections[0].id;
+      for (const s of sections) {
+        if (pos >= s.offsetTop) current = s.id;
+      }
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    };
+    window.addEventListener('scroll', setActive);
+    window.addEventListener('load', setActive);
+
+    // ===== Scroll reveal =====
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('show');
+          io.unobserve(e.target);
+        }
+      })
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // ===== Filterable projects =====
+    const filterButtons = document.querySelectorAll('#filters .chip');
+    const projectCards = document.querySelectorAll('#projectGrid .card');
+    filterButtons.forEach(btn => btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      filterButtons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      projectCards.forEach(card => {
+        const tags = card.dataset.tags || '';
+        const match = f === 'all' || tags.includes(f);
+        card.style.display = match ? '' : 'none';
+      });
+    }));
+
+    // ===== Theme toggle (persisted) =====
+    const themeToggle = document.getElementById('themeToggle');
+    const applyTheme = (mode) => {
+      document.documentElement.style.colorScheme = mode;
+      localStorage.setItem('theme', mode);
+    };
+    const saved = localStorage.getItem('theme');
+    if (saved) applyTheme(saved);
+    themeToggle.addEventListener('click', () => {
+      const next = (localStorage.getItem('theme') === 'light') ? 'dark' : 'light';
+      applyTheme(next);
+    });
+
+    // ===== Simple contact form (mailto fallback) =====
+    const form = document.getElementById('contactForm');
+    const note = document.getElementById('formNote');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = data.get('name');
+      const email = data.get('email');
+      const message = data.get('message');
+      const mailto = `mailto:you@domain.com?subject=${encodeURIComponent('Website inquiry from ' + name)}&body=${encodeURIComponent(message + '\n\nReply to: ' + email)}`;
+      window.location.href = mailto;
+      note.textContent = 'Opening your email app… If it did not open, email me at you@domain.com';
+    });
+
+    // ===== Copy email button =====
+    document.getElementById('copyEmail').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText('you@domain.com');
+        alert('Email copied to clipboard!');
+      } catch { alert('Copy failed. Email: you@domain.com'); }
+    });
+
+    // ===== Small utilities =====
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // Example: compute years of experience since 2019
+    document.getElementById('yearsExp').textContent = String(Math.max(1, new Date().getFullYear() - 2019));
+
+    // Respect reduced motion
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('*').forEach(el => el.style.scrollBehavior = 'auto');
+      document.querySelectorAll('.blob').forEach(el => el.style.animation = 'none');
+    }
+  </script>
+</body>
+</html>
